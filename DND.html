@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salvador Silang - Character Sheet</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+          
+        body {
+            background: linear-gradient(135deg, #0d0906 0%, #1a1410 50%, #0d0906 100%);
+            font-family: 'MedievalSharp', cursive;
+            color: #c9b896;
+            padding: 40px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(139, 90, 43, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(50, 30, 15, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .sheet {
+            border: 3px solid #8b5a2b;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 1200px;
+            margin: auto;
+            background: linear-gradient(135deg, #1a1410 0%, #2b1f17 50%, #1a1410 100%);
+            box-shadow: 
+                0 0 40px rgba(139, 90, 43, 0.4),
+                inset 0 0 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sheet::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8b5a2b, #cd853f, #8b5a2b, #5c3a1e);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #cd853f;
+            font-size: 2.5em;
+            text-shadow: 
+                0 0 10px rgba(205, 133, 63, 0.5),
+                2px 2px 4px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(180deg, #cd853f 0%, #8b5a2b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #a0826d;
+            text-shadow: 
+                0 0 8px rgba(160, 130, 109, 0.4),
+                1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        h3 {
+            color: #cd853f;
+            text-shadow: 
+                0 0 8px rgba(205, 133, 63, 0.4),
+                1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .character-info-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .chain-top {
+            font-size: 24px;
+            filter: drop-shadow(0 2px 5px rgba(139, 90, 43, 0.6));
+            animation: swayChain 3s ease-in-out infinite;
+        }
+
+        .chain-bottom {
+            font-size: 24px;
+            filter: drop-shadow(0 2px 5px rgba(139, 90, 43, 0.6));
+            animation: swayChain 3s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes swayChain {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(3px); }
+        }
+
+        .level-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #1a1410 0%, #2b1f17 50%, #1a1410 100%);
+            border: 4px solid #8b5a2b;
+            border-radius: 12px;
+            padding: 15px 30px;
+            box-shadow: 
+                0 0 25px rgba(139, 90, 43, 0.6),
+                inset 0 4px 15px rgba(0, 0, 0, 0.9);
+            position: relative;
+        }
+
+        .level-content::before,
+        .level-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #5c3a1e 0%, #3d2412 100%);
+            border: 3px solid #8b5a2b;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 10px rgba(139, 90, 43, 0.8),
+                inset 0 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .level-content::before {
+            left: -12px;
+            top: -12px;
+        }
+
+        .level-content::after {
+            right: -12px;
+            top: -12px;
+        }
+
+        .level-label {
+            font-size: 11px;
+            color: #8b5a2b;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 
+                0 0 5px rgba(139, 90, 43, 0.4),
+                1px 1px 2px rgba(0, 0, 0, 0.9);
+        }
+
+        .level-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .level-value {
+            font-size: 42px;
+            font-weight: bold;
+            color: #cd853f;
+            text-shadow: 
+                0 0 20px rgba(205, 133, 63, 0.8),
+                3px 3px 6px rgba(0, 0, 0, 0.9);
+            line-height: 1;
+        }
+
+        .lock-icon {
+            position: absolute;
+            font-size: 16px;
+            bottom: -8px;
+            right: -18px;
+            filter: drop-shadow(0 0 8px rgba(139, 90, 43, 0.8));
+            animation: lockGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes lockGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 8px rgba(139, 90, 43, 0.8));
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 0 15px rgba(205, 133, 63, 1));
+                transform: scale(1.1);
+            }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .section {
+            border: 2px solid #5c3a1e;
+            border-radius: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d0906 0%, #1a1410 100%);
+            width: 45%;
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.8),
+                0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .inventory-section {
+            border: 2px solid #5c3a1e;
+            border-radius: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d0906 0%, #1a1410 100%);
+            margin-top: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.8),
+                0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            width: 100%;
+            margin: auto;
+        }
+
+        .inventory-slot {
+            aspect-ratio: 1;
+            border: 2px solid #3d2412;
+            background: linear-gradient(135deg, #1a1410 0%, #0d0906 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #c9b896;
+            text-shadow: 
+                0 0 5px rgba(205, 133, 63, 0.3),
+                1px 1px 2px #000;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .inventory-slot img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(205, 133, 63, 0.3));
+        }
+
+        .inventory-slot:hover {
+            border-color: #8b5a2b;
+            box-shadow: 
+                0 0 15px rgba(139, 90, 43, 0.5),
+                inset 0 2px 4px rgba(0, 0, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+        .inventory-slot.filled {
+            background: linear-gradient(135deg, #2b1f17 0%, #1a1410 100%);
+            border-color: #5c3a1e;
+            box-shadow: 
+                0 0 10px rgba(139, 90, 43, 0.3),
+                inset 0 1px 3px rgba(205, 133, 63, 0.1);
+        }
+
+        .inventory-slot.filled:hover {
+            border-color: #8b5a2b;
+            box-shadow: 
+                0 0 20px rgba(139, 90, 43, 0.6),
+                inset 0 1px 3px rgba(205, 133, 63, 0.2);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #2b1f17 0%, #1a1410 100%);
+            color: #c9b896;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 2px solid #8b5a2b;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            box-shadow: 
+                0 0 20px rgba(139, 90, 43, 0.6),
+                inset 0 1px 3px rgba(205, 133, 63, 0.1);
+            text-shadow: 
+                0 0 5px rgba(205, 133, 63, 0.3),
+                1px 1px 2px rgba(0, 0, 0, 0.9);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #8b5a2b;
+        }
+
+        .inventory-slot:hover .tooltip {
+            opacity: 1;
+        }
+
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        .bar {
+            height: 20px;
+            background: #0d0906;
+            border: 2px solid #3d2412;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .hp-bar {
+            background: linear-gradient(90deg, #8b2500 0%, #cd4500 50%, #8b2500 100%);
+            height: 100%;
+            width: 100%;
+            box-shadow: 
+                0 0 10px rgba(139, 37, 0, 0.5),
+                inset 0 1px 2px rgba(255, 100, 0, 0.3);
+            transition: width 0.5s ease;
+        }
+
+        .mp-bar {
+            background: linear-gradient(90deg, #1a4d7a 0%, #2d6ba6 50%, #1a4d7a 100%);
+            height: 100%;
+            width: 100%;
+            box-shadow: 
+                0 0 10px rgba(45, 107, 166, 0.5),
+                inset 0 1px 2px rgba(100, 150, 255, 0.3);
+            transition: width 0.5s ease;
+        }
+
+        .attribute-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px 20px;
+            font-size: 18px;
+        }
+
+        .attribute-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .attribute-item strong {
+            color: #c9b896;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .attribute-item span {
+            color: #cd853f;
+            text-shadow: 
+                0 0 8px rgba(205, 133, 63, 0.4),
+                1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .section p {
+            color: #a0826d;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Trait System Styles */
+        .trait-item {
+            background: linear-gradient(135deg, #0d0906 0%, #1a1410 100%);
+            border: 2px solid #5c3a1e;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s;
+        }
+
+        .trait-item:hover {
+            border-color: #8b5a2b;
+            box-shadow: 
+                0 0 10px rgba(139, 90, 43, 0.4),
+                inset 0 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .trait-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .trait-header strong {
+            color: #cd853f;
+            font-size: 1.1em;
+            text-shadow: 
+                0 0 8px rgba(205, 133, 63, 0.4),
+                1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .trait-badge {
+            background: #5c3a1e;
+            color: #cd853f;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            border: 1px solid #8b5a2b;
+        }
+
+        .trait-desc {
+            color: #a0826d;
+            font-size: 0.9em;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Trait Modal */
+        .trait-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .trait-modal-content {
+            background: linear-gradient(135deg, #1a1410 0%, #2b1f17 50%, #1a1410 100%);
+            border: 4px solid #8b5a2b;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 
+                0 0 50px rgba(139, 90, 43, 0.8),
+                inset 0 2px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .trait-modal-content h2 {
+            color: #cd853f;
+            text-align: center;
+            margin: 0 0 15px 0;
+            font-size: 2em;
+            text-shadow: 
+                0 0 15px rgba(205, 133, 63, 0.6),
+                2px 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .trait-selection-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .trait-card {
+            background: linear-gradient(135deg, #0d0906 0%, #1a1410 100%);
+            border: 2px solid #5c3a1e;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .trait-card:hover {
+            border-color: #8b5a2b;
+            box-shadow: 0 0 15px rgba(139, 90, 43, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .trait-card h4 {
+            color: #cd853f;
+            font-size: 1.3em;
+            margin: 0 0 8px 0;
+            text-shadow: 
+                0 0 10px rgba(205, 133, 63, 0.4),
+                1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .trait-requirement {
+            color: #8b5a2b;
+            font-size: 0.9em;
+            margin: 0 0 10px 0;
+            font-style: italic;
+        }
+
+        .trait-description {
+            color: #a0826d;
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+        }
+
+        .trait-select-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #5c3a1e 0%, #3d2412 100%);
+            border: 2px solid #8b5a2b;
+            border-radius: 8px;
+            color: #c9b896;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .trait-select-btn:hover {
+            background: linear-gradient(135deg, #8b5a2b 0%, #5c3a1e 100%);
+            border-color: #cd853f;
+            box-shadow: 0 0 15px rgba(205, 133, 63, 0.6);
+            transform: scale(1.02);
+        }
+
+        .trait-select-btn:active {
+            transform: scale(0.98);
+        }
+
+        .plus-btn {
+            background: linear-gradient(135deg, #5c3a1e 0%, #3d2412 100%);
+            color: #c9b896;
+            border: 2px solid #5c3a1e;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 
+                0 2px 6px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(205, 133, 63, 0.2);
+            text-shadow: 
+                0 0 5px rgba(205, 133, 63, 0.3),
+                1px 1px 2px rgba(0, 0, 0, 0.9);
+        }
+
+        .plus-btn:hover {
+            background: linear-gradient(135deg, #8b5a2b 0%, #5c3a1e 100%);
+            border-color: #8b5a2b;
+            transform: scale(1.1);
+            box-shadow: 
+                0 0 15px rgba(139, 90, 43, 0.6),
+                inset 0 1px 0 rgba(205, 133, 63, 0.3);
+        }
+
+        .plus-btn:active {
+            transform: scale(0.95);
+        }
+
+        .remaining-points {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #cd853f;
+            margin-top: 15px;
+            padding: 10px;
+            background: linear-gradient(135deg, #2b1f17 0%, #1a1410 100%);
+            border-radius: 8px;
+            border: 2px solid #8b5a2b;
+            box-shadow: 
+                0 0 15px rgba(139, 90, 43, 0.4),
+                inset 0 2px 8px rgba(0, 0, 0, 0.6);
+            text-shadow: 
+                0 0 10px rgba(205, 133, 63, 0.5),
+                1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    </head>
+
+    <body>
+        <div class="sheet">
+            <h1 id="characterName">Salvador Silang</h1>
+            <div class="character-info-container">
+                <h2 id="characterInfo">♂️ Male | Race: Human | Class: Rogue</h2>
+                <div class="level-badge">
+                    <div class="chain-top">⛓️</div>
+                    <div class="level-content">
+                        <span class="level-label">LEVEL</span>
+                        <div class="level-box">
+                            <span class="level-value" id="characterLevel">1</span>
+                            <div class="lock-icon">🔒</div>
+                        </div>
+                    </div>
+                    <div class="chain-bottom">⛓️</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="section">
+                <h3>Attributes</h3>
+                <div class="attribute-list">
+                    <div class="attribute-item">
+                        <strong>STR: <span id="str-value">13</span></strong>
+                        <button class="plus-btn" onclick="increaseAttribute('str')">+</button>
+                    </div>
+                    <div class="attribute-item">
+                        <strong>DEX: <span id="dex-value">15</span></strong>
+                        <button class="plus-btn" onclick="increaseAttribute('dex')">+</button>
+                    </div>
+                    <div class="attribute-item">
+                        <strong>CON: <span id="con-value">8</span></strong>
+                        <button class="plus-btn" onclick="increaseAttribute('con')">+</button>
+                    </div>
+                    <div class="attribute-item">
+                        <strong>INT: <span id="int-value">14</span></strong>
+                        <button class="plus-btn" onclick="increaseAttribute('int')">+</button>
+                    </div>
+                    <div class="attribute-item">
+                        <strong>WIS: <span id="wis-value">12</span></strong>
+                        <button class="plus-btn" onclick="increaseAttribute('wis')">+</button>
+                    </div>
+                    <div class="attribute-item">
+                        <strong>CHA: <span id="cha-value">10</span></strong>
+                        <button class="plus-btn" onclick="increaseAttribute('cha')">+</button>
+                    </div>
+                </div>
+                <div class="remaining-points">
+                    Points Remaining: <span id="points-remaining">10</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>HP</h3>
+                <div class="bar"><div class="hp-bar" id="hpBar"></div></div>
+                <p id="hpText">100 / 100</p>
+                <h3>MP</h3>
+                <div class="bar"><div class="mp-bar" id="mpBar"></div></div>
+                <p id="mpText">50 / 50</p>
+            </div>
+        </div>
+
+        <div class="inventory-section">
+            <h3 style="text-align: center;">Inventory</h3>
+            <div class="inventory-grid" id="inventoryGrid">
+            </div>
+        </div>
+
+        <div class="inventory-section" style="margin-top: 20px;">
+            <h3 style="text-align: center;">⭐ Character Traits ⭐</h3>
+            <div id="traitsContainer" style="padding: 15px;">
+                <p style="color: #a0826d; text-align: center;">No traits selected yet</p>
+            </div>
+        </div>
+
+        <div id="traitModal" class="trait-modal">
+            <div class="trait-modal-content">
+                <h2 id="traitModalTitle">New Trait Available!</h2>
+                <p style="color: #a0826d; text-align: center; margin-bottom: 20px;">
+                    You've reached a milestone! Choose a trait to enhance your character.
+                </p>
+                <div id="traitList" class="trait-selection-list"></div>
+            </div>
+        </div>
+
+        <script src="dnd.js"></script>
+    </body>
