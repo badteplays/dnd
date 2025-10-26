@@ -11,6 +11,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -51,6 +56,81 @@
             position: relative;
             z-index: 1;
             transition: filter 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                border-radius: 10px;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 1.8em !important;
+            }
+
+            .subtitle {
+                font-size: 0.9em !important;
+            }
+
+            .selection-grid,
+            .gender-selection {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            .tekken-class-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .class-portrait {
+                height: 200px !important;
+            }
+
+            label {
+                font-size: 1em !important;
+            }
+
+            input[type="text"] {
+                font-size: 1em !important;
+                padding: 10px !important;
+            }
+
+            .create-btn {
+                font-size: 1.2em !important;
+                padding: 12px !important;
+            }
+
+            .overview-card {
+                padding: 15px !important;
+            }
+
+            body {
+                padding: 10px;
+            }
+
+            .gender-card,
+            .selection-card,
+            .tekken-class-card {
+                min-height: 50px;
+                touch-action: manipulation;
+            }
+
+            .overview-item {
+                font-size: 0.95em !important;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                max-width: 90%;
+                padding: 30px;
+            }
+
+            .tekken-class-grid {
+                gap: 15px;
+            }
         }
 
         .container::before {

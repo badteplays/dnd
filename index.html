@@ -18,6 +18,7 @@
         }
         .loader {
             text-align: center;
+            padding: 20px;
         }
         .loader h1 {
             font-size: 3em;
@@ -37,9 +38,20 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        @media (max-width: 768px) {
+            .loader h1 {
+                font-size: 2em;
+            }
+            .spinner {
+                width: 50px;
+                height: 50px;
+                border-width: 5px;
+            }
+        }
     </style>
     <script>
-        // Automatically redirect to character creation page
+      
         window.location.href = 'dndCharacter.html';
     </script>
 </head>

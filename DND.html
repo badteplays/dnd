@@ -7,6 +7,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
           
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+          
         body {
             background: linear-gradient(135deg, #0d0906 0%, #1a1410 50%, #0d0906 100%);
             font-family: 'MedievalSharp', cursive;
@@ -41,6 +49,132 @@
                 inset 0 0 60px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .sheet {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em !important;
+            }
+
+            h2 {
+                font-size: 1em !important;
+            }
+
+            h3 {
+                font-size: 1em !important;
+            }
+
+            .stats {
+                flex-direction: column !important;
+                gap: 15px;
+            }
+
+            .section {
+                width: 100% !important;
+            }
+
+            .attribute-list {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+
+            .inventory-grid {
+                grid-template-columns: repeat(5, 1fr) !important;
+                gap: 5px !important;
+            }
+
+            .inventory-slot {
+                font-size: 10px !important;
+            }
+
+            .level-badge {
+                transform: scale(0.85);
+            }
+
+            .chain-top,
+            .chain-bottom {
+                font-size: 20px !important;
+            }
+
+            .level-value {
+                font-size: 32px !important;
+            }
+
+            .plus-btn {
+                width: 20px !important;
+                height: 20px !important;
+                font-size: 14px !important;
+            }
+
+            .remaining-points {
+                font-size: 16px !important;
+                padding: 8px !important;
+            }
+
+            .trait-modal-content {
+                padding: 20px !important;
+                width: 95% !important;
+            }
+
+            .trait-item {
+                padding: 10px !important;
+            }
+
+            .plus-btn,
+            .trait-item,
+            .close-btn {
+                touch-action: manipulation;
+            }
+
+            .inventory-slot img {
+                width: 100%;
+                height: 100%;
+            }
+
+            .bar-container {
+                height: 25px !important;
+            }
+
+            .bar-fill {
+                font-size: 12px !important;
+            }
+
+            .attribute-line {
+                padding: 8px !important;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .sheet {
+                max-width: 95%;
+                padding: 20px;
+            }
+
+            .inventory-grid {
+                grid-template-columns: repeat(8, 1fr) !important;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+            }
+
+            .section {
+                width: 48% !important;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .inventory-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
         }
 
         .sheet::before {
