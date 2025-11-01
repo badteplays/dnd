@@ -105,40 +105,28 @@ let currentMP = 50;
 let maxMP = 50;
 
 // Starting equipment by class (D&D 5e based)
+// Each class starts with 3 items out of 50 inventory slots (3/50)
 // Image files should be 128x128 pixels (or 256x256 for retina displays)
 // Supported formats: PNG, JPG, WEBP, GIF
 const classStartingItems = {
     'Warrior': [
         { name: 'Longsword', image: 'longsword.png', description: 'Martial weapon (1d8 slashing)' },
         { name: 'Shield', image: 'shield.png', description: 'Heavy shield (+2 AC)' },
-        { name: 'Chain Mail', image: 'chainmail.png', description: 'Heavy armor (AC 16)' },
-        { name: 'Crossbow', image: 'crossbow.png', description: 'Light crossbow with 20 bolts' },
-        { name: 'Explorer Pack', image: 'backpack.png', description: 'Adventuring supplies' },
         { name: 'Health Potion', image: 'health_potion.png', description: 'Restores 2d4+2 HP' }
     ],
     'Rogue': [
-        { name: 'Rapier', image: 'rapier.png', description: 'Finesse weapon (1d8 piercing)' },
-        { name: 'Shortbow', image: 'shortbow.png', description: 'Ranged weapon with 20 arrows' },
-        { name: 'Leather Armor', image: 'leather_armor.png', description: 'Light armor (AC 11 + DEX)' },
         { name: 'Dagger', image: 'dagger.png', description: 'Light weapon (1d4 piercing)' },
-        { name: 'Dagger', image: 'dagger.png', description: 'Second dagger for dual wielding' },
         { name: 'Thieves Tools', image: 'thieves_tools.png', description: 'For lockpicking and traps' },
-        { name: 'Burglar Pack', image: 'burglar_pack.png', description: 'Contains rope, caltrops, etc.' }
+        { name: 'Leather Armor', image: 'leather_armor.png', description: 'Light armor (AC 11 + DEX)' }
     ],
     'Mage': [
         { name: 'Spellbook', image: 'spellbook.png', description: 'Contains 6 level 1 spells' },
-        { name: 'Quarterstaff', image: 'quarterstaff.png', description: 'Simple weapon (1d6 bludgeoning)' },
         { name: 'Arcane Focus', image: 'arcane_focus.png', description: 'Crystal orb for spellcasting' },
-        { name: 'Scholars Pack', image: 'scholars_pack.png', description: 'Books, ink, and parchment' },
-        { name: 'Robe', image: 'robe.png', description: 'Wizard robes (+1 INT)' },
         { name: 'Mana Potion', image: 'mana_potion.png', description: 'Restores 2d4+2 MP' }
     ],
     'Cleric': [
         { name: 'Mace', image: 'mace.png', description: 'Simple weapon (1d6 bludgeoning)' },
-        { name: 'Shield', image: 'shield.png', description: 'Heavy shield (+2 AC)' },
-        { name: 'Chain Mail', image: 'chainmail.png', description: 'Heavy armor (AC 16)' },
         { name: 'Holy Symbol', image: 'holy_symbol.png', description: 'Divine spellcasting focus' },
-        { name: 'Priest Pack', image: 'priest_pack.png', description: 'Religious supplies and tools' },
         { name: 'Healing Scroll', image: 'healing_scroll.png', description: 'Cure Wounds spell scroll' }
     ]
 };
@@ -388,9 +376,80 @@ function createInventorySlots() {
                 <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.parentElement.innerHTML+='❌';">
                 <div class="tooltip">${item.description}</div>
             `;
+            
+            // Add hold-click functionality
+            setupItemHoldClick(slot, item);
         }
         
         inventoryGrid.appendChild(slot);
+    }
+}
+
+// Hold-click functionality for items
+let holdTimer = null;
+let isHolding = false;
+
+function setupItemHoldClick(slotElement, item) {
+    // Mouse events (desktop)
+    slotElement.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        isHolding = true;
+        holdTimer = setTimeout(() => {
+            if (isHolding) {
+                showItemModal(item);
+            }
+        }, 500); // Hold for 500ms
+    });
+    
+    slotElement.addEventListener('mouseup', cancelHold);
+    slotElement.addEventListener('mouseleave', cancelHold);
+    
+    // Touch events (mobile)
+    slotElement.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        isHolding = true;
+        holdTimer = setTimeout(() => {
+            if (isHolding) {
+                showItemModal(item);
+            }
+        }, 500); // Hold for 500ms
+    });
+    
+    slotElement.addEventListener('touchend', cancelHold);
+    slotElement.addEventListener('touchcancel', cancelHold);
+}
+
+function cancelHold() {
+    isHolding = false;
+    if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = null;
+    }
+}
+
+function showItemModal(item) {
+    const modal = document.getElementById('itemModal');
+    const modalImage = document.querySelector('#itemModalImage img');
+    const modalName = document.getElementById('itemModalName');
+    const modalDescription = document.getElementById('itemModalDescription');
+    
+    if (modal && modalImage && modalName && modalDescription) {
+        modalImage.src = item.image;
+        modalImage.alt = item.name;
+        modalName.textContent = item.name;
+        modalDescription.textContent = item.description;
+        
+        modal.style.display = 'flex';
+    }
+}
+
+function closeItemModal(event) {
+    const modal = document.getElementById('itemModal');
+    if (modal) {
+        // Close if clicking outside the modal content or on close button
+        if (!event || event.target === modal) {
+            modal.style.display = 'none';
+        }
     }
 }
 
